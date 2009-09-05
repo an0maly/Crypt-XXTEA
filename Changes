@@ -1,0 +1,10 @@
+Revision history for Crypt-XXTEA
+
+1.00    07-Nov-2007
+        First version
+
+2.00    05-Sep-2009
+		Totally reworked.   
+		Made CPAN compliant.
+		Added test suite of known test vectors
+		Compliant to both 32-bit & 64-bit platforms

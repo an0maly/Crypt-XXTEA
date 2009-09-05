@@ -1,0 +1,11 @@
+Build.PL
+Changes
+MANIFEST
+README
+lib/Crypt/XXTEA.pm
+t/00-load.t
+t/pod-coverage.t
+t/pod.t
+t/test-vectors.t
+Makefile.PL
+META.yml
