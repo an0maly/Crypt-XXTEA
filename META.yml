@@ -1,0 +1,21 @@
+---
+name: Crypt-XXTEA
+version: 2
+author:
+  - 'Ma Bingyao <andot@ujn.edu.cn>'
+abstract: XXTEA encryption arithmetic module.
+license: lgpl
+resources:
+  license: http://opensource.org/licenses/lgpl-license.php
+build_requires:
+  Test::More: 0
+configure_requires:
+  Module::Build: 0.35
+provides:
+  Crypt::XXTEA:
+    file: lib/Crypt/XXTEA.pm
+    version: 2
+generated_by: Module::Build version 0.35
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
