@@ -1,0 +1,156 @@
+#!/usr/bin/env perl
+
+# Best read via perldoc
+#
+# E.g.,  perldoc xxtea
+# or     xxtea -man
+#
+# vim:ts=4:ai:nohls:nowrap:textwidth=75
+
+=head1 NAME
+
+xxtea - utility to encrypt/decrypt payloads via XXTEA 
+
+=cut
+
+use strict;
+use warnings 'all';
+use Crypt::XXTEA;
+use Getopt::Long;
+use Pod::Usage;
+
+my  $help;
+my  $man;
+my  $encrypt = 0;
+my  $decrypt = 0;
+my  $passphrase = '';
+
+=head1 SYNOPSIS
+
+=over 10
+
+=item B<xxtea>
+
+[B<-verbose>]  
+[B<-man>]
+S<[B<-help> | B<-?>]> 
+[S<{ B<-encrypt> | B<-decrypt> }>]
+[S<B<-passphrase> E<lt>passphraseE<gt>>]
+[I<S<E<lt>payload fileE<gt>>>]
+
+=back
+
+=cut
+
+# Process the command line, possibly dealing with help requests
+GetOptions( 'help|?' => \$help,
+            'man' => \$man,
+            'encrypt' => \$encrypt,
+            'decrypt' => \$decrypt,
+            'passphrase=s' => \$passphrase ) or
+
+# Manage online help if needed
+pod2usage( -exitstatus => 0, -verbose => 0 );
+pod2usage( -exitstatus => 0, -verbose => 1 ) if $help;
+pod2usage( -exitstatus => 0, -verbose => 2 ) if $man;
+
+=head1 OPTIONS
+
+Parameters can be abbreviated to the smallest nonambigious spelling.
+
+E.g.,
+
+    $ xxtea -e -p 'foo'
+
+=over 4
+
+=item B<-man>
+
+Display this man page
+
+=item S<B<-help> | B<-?>>
+
+Display an abbreviation of this man page
+
+=item S<{ B<-encrypt> | B<-decrypt> }>
+
+Tells whether we are encrypting plain text to cipher text, or decrypting
+cipher text to plain text.   The options are mutually exclusive.  However,
+encrypt is assumed if neither option is given.
+
+=cut
+
+pod2usage( -exitstatus => 1, -verbose => 0, -msg => '-encrypt and -decrypt are mutually exclusive options' )
+    if $encrypt && $decrypt;
+
+$encrypt = 1
+    unless $decrypt;
+
+=item S<B<-passphrase> E<lt>passphraseE<gt>>
+
+Passphrase used to encrypt or decrypt the text with.  If not provided, an
+empty passphrase is used.
+
+=item I<S<E<lt>payload fileE<gt>>>
+
+Any file passed will be used to read the text for the
+encryption/decryption.   If not provided, standard input is read.   The
+output is sent to standard out.
+
+=back
+
+=cut
+
+# Slurp in the text (will use any [remaining] command line parameters as files for input)
+undef $/;
+my  $text = scalar <>;
+
+=head1 DESCRIPTION
+
+B<xxtea> is a utility to encrypt/decrypt payloads using the perl module Crypt::XXTEA.
+It is used as a proof of concept and a means of development.
+
+=cut
+
+my  $output;
+
+my  $rc;
+if( $encrypt ) {
+    $output = xxtea_encrypt( $text, $passphrase );
+}
+else {
+    $output = xxtea_decrypt( $text, $passphrase );
+}
+
+print $output;
+
+=head1 RETURNS
+
+=over 4
+
+=item 0 -
+
+Success
+
+=item 1 -
+
+error
+
+=back
+
+=head1 EXAMPLES
+
+ $ xxtea foo
+ $ xxtea -p 'foo' -e foo | xxtea -p 'foo' -d
+
+=head1 BUGS
+
+None written at this time.  I hope not to have plenty at a later date.
+
+=head1 AUTHOR
+
+ Brian Kurle <bk@travelingbits.com>
+ Traveling bits, Inc.
+ Phone: 503.961.2489
+
+=cut
