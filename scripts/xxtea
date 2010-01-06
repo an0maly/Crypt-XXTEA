@@ -1,9 +1,20 @@
 #!/usr/bin/env perl
 
-# Best read via perldoc
+#   DECAGON DEVICES CONFIDENTIAL
+#   Copyright 2010
+#   Decagon Devices, Inc. All Rights Reserved.
 #
-# E.g.,  perldoc xxtea
-# or     xxtea -man
+#   Author: Brian Kurle
+#   Created: 05-Jan-2010
+#
+#   History:
+#   05-Jan-2010 bjk - Initial creation
+#
+# NOTES:
+#   Best read via perldoc
+#
+#   E.g.,  perldoc xxtea
+#   or     xxtea -man
 #
 # vim:ts=4:ai:nohls:nowrap:textwidth=75
 
